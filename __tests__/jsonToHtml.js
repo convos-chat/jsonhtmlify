@@ -15,62 +15,97 @@ beforeAll(() => {
   });
 });
 
+test('export ', () => {
+  expect(typeof jsonToHtml).toBe('function');
+});
+
 test('simple boolean ', () => {
   const jsonEl = jsonToHtml(true);
   expect(jsonEl.childNodes.length).toBe(1);
-  expect(jsonEl.className).toBe('json-boolean');
-  expect(jsonEl.textContent).toBe('true');
+  expect(jsonEl.className).toBe('json-item contains-boolean');
+
+  const childEl = jsonEl.querySelector('.json-boolean');
+  expect(childEl.childNodes.length).toBe(1);
+  expect(childEl.className).toBe('json-boolean');
+  expect(childEl.textContent).toBe('true');
 });
 
 test('simple number', () => {
   const jsonEl = jsonToHtml(42);
   expect(jsonEl.childNodes.length).toBe(1);
-  expect(jsonEl.className).toBe('json-number');
-  expect(jsonEl.textContent).toBe('42');
+  expect(jsonEl.className).toBe('json-item contains-number');
+
+  const childEl = jsonEl.querySelector('.json-number');
+  expect(childEl.childNodes.length).toBe(1);
+  expect(childEl.className).toBe('json-number');
+  expect(childEl.textContent).toBe('42');
 });
 
 test('simple string', () => {
   const jsonEl = jsonToHtml('foo');
   expect(jsonEl.childNodes.length).toBe(1);
-  expect(jsonEl.className).toBe('json-string');
-  expect(jsonEl.textContent).toBe('foo');
+  expect(jsonEl.className).toBe('json-item contains-string');
+
+  const childEl = jsonEl.querySelector('.json-string');
+  expect(childEl.childNodes.length).toBe(1);
+  expect(childEl.className).toBe('json-string');
+  expect(childEl.textContent).toBe('foo');
 });
 
 test('simple null', () => {
   const jsonEl = jsonToHtml(null);
   expect(jsonEl.childNodes.length).toBe(1);
-  expect(jsonEl.className).toBe('json-null');
-  expect(jsonEl.textContent).toBe('null');
+  expect(jsonEl.className).toBe('json-item contains-null');
+
+  const childEl = jsonEl.querySelector('.json-null');
+  expect(childEl.childNodes.length).toBe(1);
+  expect(childEl.className).toBe('json-null');
+  expect(childEl.textContent).toBe('null');
 });
 
 test('simple undefined', () => {
   const jsonEl = jsonToHtml(undefined);
   expect(jsonEl.childNodes.length).toBe(1);
-  expect(jsonEl.className).toBe('json-null');
-  expect(jsonEl.textContent).toBe('null');
+  expect(jsonEl.className).toBe('json-item contains-null');
+
+  const childEl = jsonEl.querySelector('.json-null');
+  expect(childEl.childNodes.length).toBe(1);
+  expect(childEl.className).toBe('json-null');
+  expect(childEl.textContent).toBe('null');
 });
 
 test('empty array', () => {
-  const jsonEl = jsonToHtml([]);
+  const jsonEl = jsonToHtml([]).childNodes[1];
   expect(jsonEl.childNodes.length).toBe(0);
   expect(jsonEl.className).toBe('json-array is-empty');
   expect(jsonEl.textContent).toBe('');
 });
 
 test('empty object', () => {
-  const jsonEl = jsonToHtml({});
+  const jsonEl = jsonToHtml({}).childNodes[1];
   expect(jsonEl.childNodes.length).toBe(0);
   expect(jsonEl.className).toBe('json-object is-empty');
   expect(jsonEl.textContent).toBe('');
 });
 
+test('simple object', () => {
+  const jsonEl = jsonToHtml({bool0: false}).childNodes[1];
+  expect(jsonEl.childNodes.length).toBe(1);
+  expect(jsonEl.className).toBe('json-object has-items');
+  expect(jsonEl.textContent).toBe('bool0false');
+});
+
 test('complex object', () => {
-  expect(complexEl.childNodes.length).toBe(7);
-  expect(complexEl.className).toBe('json-object has-items');
+  expect(complexEl.className).toBe('json-item contains-object has-items');
+  expect(complexEl.childNodes.length).toBe(2);
+  expect(complexEl.childNodes[0].className).toBe('json-type');
+  expect(complexEl.childNodes[1].className).toBe('json-object has-items');
+  expect(complexEl.childNodes[1].childNodes.length).toBe(7);
+  expect(complexEl.childNodes[1].className).toBe('json-object has-items');
 });
 
 test('complex object children', () => {
-  const childNodes = complexEl.childNodes;
+  const childNodes = complexEl.childNodes[1].childNodes;
   expect(childNodes[0].className).toBe('json-item contains-array is-empty');
   expect(childNodes[1].className).toBe('json-item contains-array has-items');
   expect(childNodes[2].className).toBe('json-item contains-boolean');
@@ -86,7 +121,7 @@ test('complex object array', () => {
   expect(arrayEls[0].className).toBe('json-key');
   expect(arrayEls[0].textContent).toBe('arr6');
   expect(arrayEls[1].className).toBe('json-type');
-  expect(arrayEls[1].textContent).toBe('Array[6]');
+  expect(arrayEls[1].textContent).toBe('array[6]');
   expect(arrayEls[2].className).toBe('json-array has-items');
 });
 
@@ -102,7 +137,7 @@ test('complex object array object', () => {
   expect(objEls[0].className).toBe('json-key');
   expect(objEls[0].textContent).toBe('5');
   expect(objEls[1].className).toBe('json-type');
-  expect(objEls[1].textContent).toBe('Object[1]');
+  expect(objEls[1].textContent).toBe('object[1]');
   expect(objEls[2].className).toBe('json-object has-items');
 
   sel = '.json-item.contains-string .json-string';
@@ -110,7 +145,7 @@ test('complex object array object', () => {
 })
 
 test('complex object null', () => {
-  const strEl = complexEl.childNodes[5];
+  const strEl = complexEl.childNodes[1].childNodes[5];
   expect(strEl.querySelector('.json-key').textContent).toBe('str0');
   expect(strEl.querySelector('.json-string').textContent).toBe('');
   //expect(complexEl.innerHTML.split('><').join('>\n<')).toBe('');
