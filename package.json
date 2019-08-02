@@ -1,0 +1,24 @@
+{
+  "name": "@jhthorsen/jsontohtml",
+  "version": "0.0.1",
+  "description": "A library to convert JSON into HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhthorsen/node-jsontohtml.git"
+  },
+  "keywords": [
+    "html",
+    "json",
+    "tree"
+  ],
+  "author": "Jan Henning Thorsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhthorsen/node-jsontohtml/issues"
+  },
+  "homepage": "https://github.com/jhthorsen/node-jsontohtml#readme"
+}
