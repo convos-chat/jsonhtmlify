@@ -1,5 +1,5 @@
 {
-  "name": "@jhthorsen/jsontohtml",
+  "name": "jsonhtmlify",
   "version": "0.0.1",
   "description": "A library to convert JSON into HTML",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jhthorsen/node-jsontohtml.git"
+    "url": "git+https://github.com/jhthorsen/jsonhtmlify.git"
   },
   "keywords": [
     "html",
@@ -18,9 +18,9 @@
   "author": "Jan Henning Thorsen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jhthorsen/node-jsontohtml/issues"
+    "url": "https://github.com/jhthorsen/jsonhtmlify/issues"
   },
-  "homepage": "https://github.com/jhthorsen/node-jsontohtml#readme",
+  "homepage": "https://github.com/jhthorsen/jsonhtmlify#readme",
   "devDependencies": {
     "browser-env": "^3.2.6",
     "jest": "^24.8.0"

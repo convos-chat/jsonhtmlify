@@ -1,5 +1,5 @@
 /**
- * `jsonToHtml()` takes any type (object, array, string, null, ...) and converts
+ * `jsonhtmlify()` takes any type (object, array, string, null, ...) and converts
  * it to a DOM structure.
  *
  * This function does not do any styling, and it does also does not provide any
@@ -11,26 +11,26 @@
  *
  * @example
  * // Import the function
- * const {jsonToHtml} = require('@jhthorsen/jsontohtml');
+ * const {jsonhtmlify} = require('jsonhtmlify');
  *
  * // <span class="json-boolean">true</span>
- * const domNode = jsonToHtml(true);
+ * const domNode = jsonhtmlify(true);
  *
  * // <span class="json-number">42</span>
- * const domNode = jsonToHtml(42);
+ * const domNode = jsonhtmlify(42);
  *
  * // <span class="json-string">foo</span>
- * const domNode = jsonToHtml('foo');
+ * const domNode = jsonhtmlify('foo');
  *
  * // <span class="json-null">null</span>
- * const domNode = jsonToHtml(null);
- * const domNode = jsonToHtml(undefined);
+ * const domNode = jsonhtmlify(null);
+ * const domNode = jsonhtmlify(undefined);
  *
  * // <div class="json-array is-empty"></div>
- * const domNode = jsonToHtml([]);
+ * const domNode = jsonhtmlify([]);
  *
  * // <div class="json-object is-empty"></div>
- * const domNode = jsonToHtml({});
+ * const domNode = jsonhtmlify({});
  *
  * // <div class="json-object has-items">
  * //   <div class="json-item contains-number">
@@ -48,12 +48,12 @@
  * //     </div>
  * //   </div>
  * // </div>
- * const domNode = jsonToHtml({age: 36, languages: ['norwegian', 'english']});
+ * const domNode = jsonhtmlify({age: 36, languages: ['norwegian', 'english']});
  *
- * @param {Any} json An object, array, string, ...
- * @returns HTMLDomElement A DOM element
+ * @param {Any} json An array, boolean, null, number, object or string.
+ * @returns {HTMLElement} A DOM element.
  */
-function jsonToHtml(json) {
+function jsonhtmlify(json) {
   let rootEl = document.createElement('div');
   const queue = [[json, rootEl]];
   const visited = [];
@@ -72,7 +72,7 @@ function jsonToHtml(json) {
       type = 'array';
     }
 
-    // Convert topic to a DOM node
+    // Convert topic to a DOM element
     if (type == 'array') {
       keyByIndex = (i) => i;
       keyByIndex.len = topic.length;
@@ -133,7 +133,7 @@ function jsonToHtml(json) {
 
 // Not very pretty, but seems to work
 try {
-  module.exports = {jsonToHtml};
+  module.exports = {jsonhtmlify};
 } catch(err) {
-  window.jsonToHtml = jsonToHtml;
+  window.jsonhtmlify = jsonhtmlify;
 }

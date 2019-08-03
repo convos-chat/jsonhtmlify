@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>jsonToHtml examples</title>
+    <title>jsonhtmlify examples</title>
     <style>
 html,
 body {
@@ -106,10 +106,10 @@ h2 {
   </head>
   <body>
     <div class="content">
-      <h1>jsonToHtml examples</h1>
+      <h1>jsonhtmlify examples</h1>
 
       <p>
-        Check out <code>jsonToHtml()</code> on <a href="https://github.com/jhthorsen/jsontohtml">Github</a>.
+        Check out <code>jsonhtmlify()</code> on <a href="https://github.com/jhthorsen/jsonhtmlify">Github</a>.
       </p>
 
       <div class="examples">
@@ -125,7 +125,7 @@ h2 {
     <script>
       (function(d, w) {
         function render(id, json) {
-          const jsonEl = jsonToHtml(json);
+          const jsonEl = jsonhtmlify(json);
           const sibling = d.getElementById(id);
           sibling.parentNode.insertBefore(jsonEl, sibling.nextSibling);
         }

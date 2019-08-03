@@ -1,10 +1,10 @@
 require('browser-env')({url: 'http://localhost'});
 
-const {jsonToHtml} = require('../index');
+const {jsonhtmlify} = require('../index');
 
 let complexEl;
 beforeAll(() => {
-  complexEl = jsonToHtml({
+  complexEl = jsonhtmlify({
     arr0: [],
     arr6: [42, 0, false, true, 'foo', {k0: 'some value'}],
     bool0: false,
@@ -16,11 +16,11 @@ beforeAll(() => {
 });
 
 test('export ', () => {
-  expect(typeof jsonToHtml).toBe('function');
+  expect(typeof jsonhtmlify).toBe('function');
 });
 
 test('simple boolean ', () => {
-  const jsonEl = jsonToHtml(true);
+  const jsonEl = jsonhtmlify(true);
   expect(jsonEl.childNodes.length).toBe(1);
   expect(jsonEl.className).toBe('json-item contains-boolean');
 
@@ -31,7 +31,7 @@ test('simple boolean ', () => {
 });
 
 test('simple number', () => {
-  const jsonEl = jsonToHtml(42);
+  const jsonEl = jsonhtmlify(42);
   expect(jsonEl.childNodes.length).toBe(1);
   expect(jsonEl.className).toBe('json-item contains-number');
 
@@ -42,7 +42,7 @@ test('simple number', () => {
 });
 
 test('simple string', () => {
-  const jsonEl = jsonToHtml('foo');
+  const jsonEl = jsonhtmlify('foo');
   expect(jsonEl.childNodes.length).toBe(1);
   expect(jsonEl.className).toBe('json-item contains-string');
 
@@ -53,7 +53,7 @@ test('simple string', () => {
 });
 
 test('simple null', () => {
-  const jsonEl = jsonToHtml(null);
+  const jsonEl = jsonhtmlify(null);
   expect(jsonEl.childNodes.length).toBe(1);
   expect(jsonEl.className).toBe('json-item contains-null');
 
@@ -64,7 +64,7 @@ test('simple null', () => {
 });
 
 test('simple undefined', () => {
-  const jsonEl = jsonToHtml(undefined);
+  const jsonEl = jsonhtmlify(undefined);
   expect(jsonEl.childNodes.length).toBe(1);
   expect(jsonEl.className).toBe('json-item contains-null');
 
@@ -75,21 +75,21 @@ test('simple undefined', () => {
 });
 
 test('empty array', () => {
-  const jsonEl = jsonToHtml([]).childNodes[1];
+  const jsonEl = jsonhtmlify([]).childNodes[1];
   expect(jsonEl.childNodes.length).toBe(0);
   expect(jsonEl.className).toBe('json-array is-empty');
   expect(jsonEl.textContent).toBe('');
 });
 
 test('empty object', () => {
-  const jsonEl = jsonToHtml({}).childNodes[1];
+  const jsonEl = jsonhtmlify({}).childNodes[1];
   expect(jsonEl.childNodes.length).toBe(0);
   expect(jsonEl.className).toBe('json-object is-empty');
   expect(jsonEl.textContent).toBe('');
 });
 
 test('simple object', () => {
-  const jsonEl = jsonToHtml({bool0: false}).childNodes[1];
+  const jsonEl = jsonhtmlify({bool0: false}).childNodes[1];
   expect(jsonEl.childNodes.length).toBe(1);
   expect(jsonEl.className).toBe('json-object has-items');
   expect(jsonEl.textContent).toBe('bool0false');

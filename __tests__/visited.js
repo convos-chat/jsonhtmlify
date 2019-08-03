@@ -1,13 +1,13 @@
 require('browser-env')({url: 'http://localhost'});
 
-const {jsonToHtml} = require('../index');
+const {jsonhtmlify} = require('../index');
 
 test('visited ', () => {
   const json = {foo: 42, array: []};
   json.array.push(json);
   json.self = json;
 
-  const jsonEl = jsonToHtml(json);
+  const jsonEl = jsonhtmlify(json);
   expect(jsonEl.className).toBe('json-item contains-object has-items has-recursive-items');
   expect(jsonEl.childNodes.length).toBe(2);
 
