@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jsonToHtml examples</title>
+    <style>
+html,
+body {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5rem;
+}
+
+a {
+  color: #228dad;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+.content {
+  max-width: 50rem;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.examples > .json-item {
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  font-family: monospace;
+}
+
+.json-item .json-item {
+  border-left: 1px solid #666;
+  margin-left: 0.2rem;
+  padding-left: 0.3rem;
+}
+
+.json-boolean:after,
+.json-null:after,
+.json-number:after {
+  content: ', ';
+}
+
+.json-boolean {
+  color: #228dad;
+}
+
+.json-key {
+  font-weight: bold;
+}
+
+.json-key:after {
+  content: ': ';
+  color: #222;
+}
+
+.json-null {
+  color: #222;
+}
+
+.json-number {
+  color: #cc4638;
+}
+
+.json-string {
+  color: #0d9256;
+}
+
+.json-string:before {
+  content: '"';
+  color: #222;
+}
+
+.json-string:after {
+  content: '", ';
+  color: #222;
+}
+
+.json-type {
+  color: #b3833f;
+}
+
+.examples > .json-item > .json-boolean:after,
+.examples > .json-item > .json-null:after,
+.examples > .json-item > .json-number:after,
+.json-item:last-child > .json-boolean:after,
+.json-item:last-child > .json-null:after,
+.json-item:last-child > .json-number:after {
+  content: '';
+}
+
+.examples > .json-item > .json-string:after,
+.json-item:last-child > .json-string:after {
+  content: '"';
+}
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>jsonToHtml examples</h1>
+
+      <p>
+        Check out <code>jsonToHtml()</code> on <a href="https://github.com/jhthorsen/jsontohtml">Github</a>.
+      </p>
+
+      <div class="examples">
+        <h2 id="boolean">Boolean</h2>
+        <h2 id="number">Number</h2>
+        <h2 id="null">Null</h2>
+        <h2 id="string">String</h2>
+        <h2 id="complex">Complex</h2>
+      </div>
+    </div>
+
+    <script src="../index.js"></script>
+    <script>
+      (function(d, w) {
+        function render(id, json) {
+          const jsonEl = jsonToHtml(json);
+          const sibling = d.getElementById(id);
+          sibling.parentNode.insertBefore(jsonEl, sibling.nextSibling);
+        }
+
+        render('boolean', Math.random() > 0.5);
+        render('number', Math.random());
+        render('null', Math.random() > 0.5 ? null : undefined);
+        render('string', 'Some string');
+
+        render('complex', {
+          arr0: [],
+          arr6: [42, 0, false, true, 'foo', {k0: 'some value'}],
+          bool0: false,
+          obj0: {},
+          obj1: {null: null},
+          str0: '',
+          str1: 'hello world',
+        });
+
+      })(document, window);
+    </script>
+  </body>
+</html>

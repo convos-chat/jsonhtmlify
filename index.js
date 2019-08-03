@@ -131,4 +131,9 @@ function jsonToHtml(json) {
   return rootEl;
 }
 
-module.exports = {jsonToHtml};
+// Not very pretty, but seems to work
+try {
+  module.exports = {jsonToHtml};
+} catch(err) {
+  window.jsonToHtml = jsonToHtml;
+}
