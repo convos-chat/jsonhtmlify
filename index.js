@@ -3,7 +3,7 @@
  * it to a DOM structure.
  *
  * This function does not do any styling, and it does also does not provide any
- * click events. See the examples on [github](https://github.com/jhthorsen/jsontohtml)
+ * click events. See the examples on [github](http://htmlpreview.github.io/?https://github.com/jhthorsen/jsonhtmlify/blob/master/examples/index.html)
  * for information on how to do that.
  *
  * What it does however, is that it adds many classes to the DOM elements, so
