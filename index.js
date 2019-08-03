@@ -56,7 +56,9 @@
 function jsonToHtml(json) {
   let rootEl = document.createElement('div');
   const queue = [[json, rootEl]];
+  const visited = [];
 
+  TOPIC:
   while (queue.length) {
     const [topic, parentEl] = queue.shift();
     let topicEl, keyByIndex;
@@ -94,22 +96,31 @@ function jsonToHtml(json) {
     if (keyByIndex) {
 
       // Add "array[...]" or "object[...]" type/description
-      const valueEl = document.createElement('span');
-      valueEl.className = 'json-type';
-      valueEl.textContent = keyByIndex.len ? type + '[' + keyByIndex.len + ']': '{}';
-      parentEl.appendChild(valueEl);
+      const typeEl = document.createElement('span');
+      typeEl.className = 'json-type';
+      typeEl.textContent = keyByIndex.len ? type + '[' + keyByIndex.len + ']': '{}';
+      parentEl.appendChild(typeEl);
 
-      // Create child nodes for array or object
-      for (let i = 0; i < keyByIndex.len; i++) {
-        const key = keyByIndex(i);
-        const itemEl = document.createElement('div');
-        const keyEl = document.createElement('span');
+      // Guard against recursive structures
+      if (visited.indexOf(topic) != -1) {
+        rootEl.classList.add('has-recursive-items');
+        topicEl.classList.add('is-seen');
+      }
+      else {
+        // Create child nodes for array or object
+        for (let i = 0; i < keyByIndex.len; i++) {
+          const key = keyByIndex(i);
+          const itemEl = document.createElement('div');
+          const keyEl = document.createElement('span');
 
-        keyEl.className = 'json-key';
-        keyEl.textContent = key;
-        itemEl.appendChild(keyEl);
-        topicEl.appendChild(itemEl);
-        queue.push([topic[key], itemEl]);
+          keyEl.className = 'json-key';
+          keyEl.textContent = key;
+          itemEl.appendChild(keyEl);
+          topicEl.appendChild(itemEl);
+          queue.push([topic[key], itemEl]);
+        }
+
+        visited.push(topic);
       }
     }
 
