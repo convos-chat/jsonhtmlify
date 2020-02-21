@@ -44,10 +44,12 @@ h2 {
   padding-left: 0.3rem;
 }
 
-.json-boolean:after,
-.json-null:after,
-.json-number:after {
-  content: ', ';
+.json-colon {
+  padding-right: 0.3rem;
+}
+
+.json-comma.is-trailing {
+  display: none;
 }
 
 .json-boolean {
@@ -56,11 +58,6 @@ h2 {
 
 .json-key {
   font-weight: bold;
-}
-
-.json-key:after {
-  content: ': ';
-  color: #222;
 }
 
 .json-null {
@@ -81,26 +78,12 @@ h2 {
 }
 
 .json-string:after {
-  content: '", ';
+  content: '"';
   color: #222;
 }
 
 .json-type {
   color: #b3833f;
-}
-
-.examples > .json-item > .json-boolean:after,
-.examples > .json-item > .json-null:after,
-.examples > .json-item > .json-number:after,
-.json-item:last-child > .json-boolean:after,
-.json-item:last-child > .json-null:after,
-.json-item:last-child > .json-number:after {
-  content: '';
-}
-
-.examples > .json-item > .json-string:after,
-.json-item:last-child > .json-string:after {
-  content: '"';
 }
     </style>
   </head>
@@ -125,7 +108,7 @@ h2 {
     <script>
       (function(d, w) {
         function render(id, json) {
-          const jsonEl = jsonhtmlify(json);
+          const jsonEl = jsonhtmlify(json, {allTags: true});
           const sibling = d.getElementById(id);
           sibling.parentNode.insertBefore(jsonEl, sibling.nextSibling);
         }

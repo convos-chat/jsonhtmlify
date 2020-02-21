@@ -19,6 +19,9 @@
  * // <span class="json-number">42</span>
  * const domNode = jsonhtmlify(42);
  *
+ * // <span class="json-number">42</span><span class="json-comma is-trailing">,</span>
+ * const domNode = jsonhtmlify(42, {allTags: true});
+ *
  * // <span class="json-string">foo</span>
  * const domNode = jsonhtmlify('foo');
  *
@@ -51,16 +54,20 @@
  * const domNode = jsonhtmlify({age: 36, languages: ['norwegian', 'english']});
  *
  * @param {Any} json An array, boolean, null, number, object or string.
+ * @param {Object} options Pass on extra instructions. See examples
  * @returns {HTMLElement} A DOM element.
  */
-function jsonhtmlify(json) {
+function jsonhtmlify(json, options) {
   let rootEl = document.createElement('div');
-  const queue = [[json, rootEl]];
+  const queue = [[json, rootEl, {last: true}]];
   const visited = [];
+
+  const allTags = options && options.allTags;
 
   TOPIC:
   while (queue.length) {
-    const [topic, parentEl] = queue.shift();
+    const [topic, parentEl, topicParams] = queue.shift();
+    const commaClassName = 'json-comma' + (topicParams.last ? ' is-trailing' : '');
     let topicEl, keyByIndex;
 
     // Figure out the type we are working with
@@ -76,30 +83,25 @@ function jsonhtmlify(json) {
     if (type == 'array') {
       keyByIndex = (i) => i;
       keyByIndex.len = topic.length;
-      topicEl = document.createElement('div');
-      topicEl.className = 'json-array ' + (keyByIndex.len ? 'has-items' : 'is-empty');
+      textNode(parentEl, 'json-type', keyByIndex.len ? 'array[' + keyByIndex.len + ']': '[]');
+      if (allTags) textNode(parentEl, commaClassName, ',');
+      topicEl = wrapperNode(parentEl, 'json-array ' + (keyByIndex.len ? 'has-items' : 'is-empty'));
     }
     else if (type == 'object') {
       const keys = Object.keys(topic).sort();
       keyByIndex = (i) => keys[i];
       keyByIndex.len = keys.length;
-      topicEl = document.createElement('div');
-      topicEl.className = 'json-object ' + (keyByIndex.len ? 'has-items' : 'is-empty');
+      textNode(parentEl, 'json-type', keyByIndex.len ? 'object[' + keyByIndex.len + ']': '{}');
+      if (allTags) textNode(parentEl, commaClassName, ',');
+      topicEl = wrapperNode(parentEl, 'json-object ' + (keyByIndex.len ? 'has-items' : 'is-empty'));
     }
     else {
-      topicEl = document.createElement('span');
-      topicEl.className = 'json-' + type;
-      topicEl.textContent = type == 'null' ? 'null' : type != 'boolean' ? topic : topic ? 'true' : 'false';
+      topicEl = textNode(parentEl, 'json-' + type, type == 'null' ? 'null' : type != 'boolean' ? topic : topic ? 'true' : 'false');
+      if (allTags) textNode(parentEl, commaClassName, ',');
     }
 
-    // Iterate over children of array object
+    // Iterate over children
     if (keyByIndex) {
-
-      // Add "array[...]" or "object[...]" type/description
-      const typeEl = document.createElement('span');
-      typeEl.className = 'json-type';
-      typeEl.textContent = keyByIndex.len ? type + '[' + keyByIndex.len + ']': '{}';
-      parentEl.appendChild(typeEl);
 
       // Guard against recursive structures
       if (visited.indexOf(topic) != -1) {
@@ -110,14 +112,10 @@ function jsonhtmlify(json) {
         // Create child nodes for array or object
         for (let i = 0; i < keyByIndex.len; i++) {
           const key = keyByIndex(i);
-          const itemEl = document.createElement('div');
-          const keyEl = document.createElement('span');
-
-          keyEl.className = 'json-key';
-          keyEl.textContent = key;
-          itemEl.appendChild(keyEl);
-          topicEl.appendChild(itemEl);
-          queue.push([topic[key], itemEl]);
+          const itemEl = wrapperNode(topicEl, '');
+          textNode(itemEl, 'json-key', key);
+          if (allTags) textNode(itemEl, 'json-colon', ':');
+          queue.push([topic[key], itemEl, {last: i + 1 == keyByIndex.len}]);
         }
 
         visited.push(topic);
@@ -125,10 +123,24 @@ function jsonhtmlify(json) {
     }
 
     parentEl.className = 'json-item ' + topicEl.className.replace(/^json-/, 'contains-');
-    parentEl.appendChild(topicEl);
   }
 
   return rootEl;
+}
+
+function wrapperNode(parentEl, className) {
+  const el = document.createElement('div');
+  el.className = className;
+  parentEl.appendChild(el);
+  return el;
+}
+
+function textNode(parentEl, className, text) {
+  const el = document.createElement('span');
+  el.className = className;
+  el.textContent = text;
+  parentEl.appendChild(el);
+  return el;
 }
 
 // Not very pretty, but seems to work
