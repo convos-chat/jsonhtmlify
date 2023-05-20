@@ -23,6 +23,6 @@
   "homepage": "https://github.com/jhthorsen/jsonhtmlify#readme",
   "devDependencies": {
     "browser-env": "^3.2.6",
-    "jest": "^24.8.0"
+    "jest": "^29.5.0"
   }
 }
