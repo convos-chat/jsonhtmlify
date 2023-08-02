@@ -72,7 +72,7 @@ packages:
     dependencies:
       '@babel/types': 7.22.5
       jsesc: 2.5.2
-      lodash: 4.17.15
+      lodash: 4.17.21
       source-map: 0.5.7
     dev: true
 
@@ -366,7 +366,7 @@ packages:
     resolution: {integrity: sha512-jBD+G8+LWpMBBWvVcdr4QysjUE4mU/syrhN17o1u3gx0/WzJB1kwiVZAXRtWbsIPOwW8pF/YJV5+nmetPzepXg==}
     dependencies:
       esutils: 2.0.3
-      lodash: 4.17.15
+      lodash: 4.17.21
       to-fast-properties: 2.0.0
     dev: true
 
@@ -2084,8 +2084,8 @@ packages:
     resolution: {integrity: sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=}
     dev: true
 
-  /lodash@4.17.15:
-    resolution: {integrity: sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==}
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
 
   /lru-cache@5.1.1:
@@ -2348,7 +2348,7 @@ packages:
     peerDependencies:
       request: ^2.34
     dependencies:
-      lodash: 4.17.15
+      lodash: 4.17.21
       request: 2.88.2
     dev: true
 
