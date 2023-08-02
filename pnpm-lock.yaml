@@ -748,8 +748,8 @@ packages:
     hasBin: true
     dev: true
 
-  /ajv@6.11.0:
-    resolution: {integrity: sha512-nCprB/0syFYy9fVYU1ox1l2KN8S9I+tziH8D4zdZuLT3N6RMlGSGt5FSTpAiHB/Whv8Qs1cWHma1aMKZyaHRKA==}
+  /ajv@6.12.6:
+    resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
     dependencies:
       fast-deep-equal: 3.1.1
       fast-json-stable-stringify: 2.1.0
@@ -1390,7 +1390,7 @@ packages:
     resolution: {integrity: sha512-sNvOCzEQNr/qrvJgc3UG/kD4QtlHycrzwS+6mfTrrSq97BvaYcPZZI1ZSqGSPR73Cxn4LKTD4PttRwfU7jWq5g==}
     engines: {node: '>=6'}
     dependencies:
-      ajv: 6.11.0
+      ajv: 6.12.6
       har-schema: 2.0.0
     dev: true
 
